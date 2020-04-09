@@ -1,31 +1,53 @@
 /* 
- * File:   main.c
- * Author: fatimarodrigues
- * Number: 2019112924
- *
+ * Author: Maria de Fatima Gomes Rodrigues (2019112924)
  * Created on April 7, 2020, 10:40 PM
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "utils.h"
+#include "constantes_estruturas.h"
+#include "ficheiros.h"
 
 
-// Função main () com alguns exemplos simples de utilizacao das funcoes
+
 int main(int argc, char** argv){
-
-  int i;
-
-    initRandom();   // esta função só deve ser chamada uma vez
-
-    printf("10 valores aleatorios uniformes entre [4, 10]:\n");
-    for(i=0; i<10; i++)
-        printf("%d\n", intUniformRnd(4, 100));
-
-    printf(" Probabilidade 0.25 de um evento suceder: \n");
-    for(i=0; i<10; i++)
-        printf("%d\n", probEvento(0.25));
-
-    return 0;
+   
+    local tab_locais[5]; 
+    pessoa tab_pessoas[10]; 
+    int total_locais, total_pessoas; 
+    char opcao; 
+    
+    
+    // 1. Fase de Preparacao
+    
+    printf("Fase de Preparacao Iniciada\n"); 
+    
+    printf("A carregar locais...\n"); 
+    
+    carregaLocais(tab_locais, &total_locais); 
+    
+    printf("A carregar pessoas...\n"); 
+    
+    carregaPessoas(tab_pessoas, &total_pessoas); 
+    
+    printf("Listar Pessoas?[Y\\n]\n"); 
+    scanf("%c", &opcao); 
+    
+    if(opcao == 'Y' || opcao == 'y')
+    {
+       
+            printPessoas(tab_pessoas, total_pessoas); 
+                
+    }
+    
+    
+    
+    
+    //2. Fase de Simulacao
+    
+    
+    
+    
 }
 
