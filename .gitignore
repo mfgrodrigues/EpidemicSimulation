@@ -52,3 +52,5 @@ Mkfile.old
 dkms.conf
 /dist/
 /build/
+/Exercicio6_Guiao2/build/
+/Exercicio6_Guiao2/dist/

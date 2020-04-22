@@ -7,11 +7,12 @@
 #ifndef FICHEIROS_H
 #define FICHEIROS_H
 
-void carregaLocais(local *tab_locais, int *total); 
+plocal leFicheiroLocais(plocal tab_locais, int *total, char *nome_ficheiro);
 
-void carregaPessoas(pessoa *tab_pessoas, int *total_pessoas); 
+int validaLigacoes(plocal locais, int nLocais);
+//void carregaPessoas(pessoa *tab_pessoas, int *total_pessoas); 
 
-void printPessoas(pessoa *tab_pessoas, int total_pessoas); 
+//void printPessoas(pessoa *tab_pessoas, int total_pessoas); 
 
 
 

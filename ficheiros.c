@@ -4,46 +4,72 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "constantes_estruturas.h"
 
 //Le o ficheiro binario e guarda em memoria dinamica 
-void carregaLocais(local *tab_locais, int *total){
 
-    FILE *f; 
-    local aux; 
-    int i; 
-    *total = 0; 
-    
-    
-    if((f = fopen("E1.bin", "rb")) == NULL)
-    {
-        printf("Erro no acesso ao ficheiro\n"); 
-        return;
+plocal leFicheiroLocais(plocal tab_locais, int *total, char *nome_ficheiro) {
+
+    FILE *f;
+
+    f = fopen(nome_ficheiro, "rb");
+    if (f == NULL) {
+        printf("Erro no acesso ao ficheiro %s\n", nome_ficheiro);
+        return 0;
     }
-    
-    fread(&aux, sizeof(local), 1, f); 
-    while(feof(f) == 0)
-    {
-        tab_locais[(*total)++] = aux; 
-        printf("Local ID: %d, Capacidade: %d\n", aux.id, aux.capacidade);
-        for(i = 0; i < 3; i++)
-        {
-            printf("Ligacao: %d\n", aux.liga[i]); 
-        }
-        fread(&aux, sizeof(local), 1, f); 
-        
+
+    fseek(f, 0, SEEK_END); //move o cursor para o final do ficheiro
+
+    //ftell devolve tamanho em bytes até ao cursor
+    *total = ftell(f) / sizeof (local);
+
+    tab_locais = malloc(sizeof (local) * *total);
+    if (tab_locais == NULL) {
+        printf("Erro ao alocar o array\n");
+        fclose(f);
+        return NULL;
     }
-    
+
+    fseek(f, 0, SEEK_SET);
+    fread(tab_locais, sizeof (local), *total, f);
+
     fclose(f);
-
+    return tab_locais;
 }
 
+//Valida ligacoes, devolve 1 se valido e 0 se invalido
+int validaLigacoes(plocal locais, int nLocais) {
+
+    int valida, i, j, k, l;
+
+    for (i = 0; i < nLocais; i++) {
+        for (j = 0; j < 3; j++) {
+            if(locais[i].liga[j] != -1){
+                valida = 0;
+                for (k = 0; k < nLocais; k++) {
+                    if (locais[i].liga[j] == locais[k].id) {
+                        for (l = 0; l < 3; l++) {
+                            if (locais[k].liga[l] == locais[i].id) {
+                                valida++;
+                            }
+                        }
+                    }
+                }
+                if (valida != 1) {
+                    return 0;
+                }
+            }
+        }
+    }
+    return 1;
+}
 
 //Le o ficheiro de texto e guarda em memoria dinamica
-void carregaPessoas(pessoa *tab_pessoas, int *total_pessoas){
+/*void carregaPessoas(pessoa *tab_pessoas, int *total_pessoas){
     
 FILE *f; 
-*total_pessoas = 0; 
+ *total_pessoas = 0; 
 ppessoa p = tab_pessoas; 
 
 if((f = fopen("pessoasA.txt", "rt")) == NULL)
@@ -63,10 +89,10 @@ while(fscanf(f,"%s %d %s",p->identificador, &p->idade, &p->estado) == 3){
 fclose(f); 
 
 }
-
+ */
 
 // Imprime informacao do ficheiro pessoasA.txt
-void printPessoas(pessoa *tab_pessoas, int total_pessoas)
+/*void printPessoas(pessoa *tab_pessoas, int total_pessoas)
 {
     int i; 
     
@@ -77,4 +103,4 @@ void printPessoas(pessoa *tab_pessoas, int total_pessoas)
         printf("Dias Infetado: %d\n", tab_pessoas[i].dias_infetado);
     }
 }
-
+ */
