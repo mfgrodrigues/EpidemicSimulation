@@ -31,15 +31,28 @@ plocal leFicheiroLocais(plocal tab_locais, int *total, char *nome_ficheiro) {
         return NULL;
     }
 
-    fseek(f, 0, SEEK_SET);
+    rewind(f); 
     fread(tab_locais, sizeof (local), *total, f);
 
     fclose(f);
     return tab_locais;
 }
 
+int validaID_Locais(plocal locais, int nLocais){
+
+    int i; 
+    
+    for(i= 0; i<nLocais; i++){
+        if(locais[i].id <= 0){
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
 //Valida ligacoes, devolve 1 se valido e 0 se invalido
-int validaLigacoes(plocal locais, int nLocais) {
+int validaLigacoesLocais(plocal locais, int nLocais) {
 
     int valida, i, j, k, l;
 

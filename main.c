@@ -8,20 +8,7 @@
 #include "utils.h"
 #include "constantes_estruturas.h"
 #include "ficheiros.h"
-
-void printLocais(plocal locais, int nLocais) {
-
-    int i, j;
-    for (i = 0; i < nLocais; i++) {
-        printf("Local: %d\tCapacidade: %d\tLigacoes:", (locais + i)->id, (locais + i)->capacidade);
-        for (j = 0; j < 3; j++) {
-            if ((locais + i)->liga[j] != -1) {
-                printf("%d ", (locais + i)->liga[j]);
-            }
-        }
-        printf("\n");
-    }
-}
+#include "interface.h"
 
 int main(int argc, char** argv) {
 
@@ -31,7 +18,7 @@ int main(int argc, char** argv) {
     }
     char *nome_ficheiro = argv[1];
     plocal locais;
-    int total_locais, valido;
+    int nLocais, valido;
     char opcao;
 
     // 1. Fase de Preparacao
@@ -39,15 +26,23 @@ int main(int argc, char** argv) {
     printf("Fase de Preparacao Iniciada\n");
     printf("A carregar locais...\n");
 
-    locais = leFicheiroLocais(locais, &total_locais, nome_ficheiro);
-    valido = validaLigacoes(locais, total_locais); 
-
-    printLocais(locais, total_locais);
-
+    locais = leFicheiroLocais(locais, &nLocais, nome_ficheiro);
+    
+    valido = validaID_Locais(locais, nLocais); 
+    if(valido == 0){
+        printf("Os locais apresentam IDs negativos.\n");
+        return 0;
+    }
+    
+    valido = validaLigacoesLocais(locais, nLocais);
     if(valido == 0){
         printf("Os locais apresentam ligacoes invalidas.\n");
         return 0;
     }
+    
+    printLocais(locais, nLocais);
+
+    
     //printf("A carregar pessoas...\n");
 
     /*carregaPessoas(tab_pessoas, argv[2]); 

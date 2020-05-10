@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>constantes_estruturas.h</itemPath>
       <itemPath>ficheiros.h</itemPath>
+      <itemPath>interface.h</itemPath>
       <itemPath>utils.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -20,8 +21,8 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>constantes_estruturas.c</itemPath>
       <itemPath>ficheiros.c</itemPath>
+      <itemPath>interface.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>utils.c</itemPath>
     </logicalFolder>
@@ -53,13 +54,15 @@
       </item>
       <item path="E3.bin" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="constantes_estruturas.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="constantes_estruturas.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ficheiros.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ficheiros.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="interface.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="interface.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -98,13 +101,15 @@
       </item>
       <item path="E3.bin" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="constantes_estruturas.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="constantes_estruturas.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ficheiros.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ficheiros.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="interface.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="interface.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>

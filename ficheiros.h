@@ -9,7 +9,10 @@
 
 plocal leFicheiroLocais(plocal tab_locais, int *total, char *nome_ficheiro);
 
-int validaLigacoes(plocal locais, int nLocais);
+int validaID_Locais(plocal locais, int nLocais);
+
+int validaLigacoesLocais(plocal locais, int nLocais);
+
 //void carregaPessoas(pessoa *tab_pessoas, int *total_pessoas); 
 
 //void printPessoas(pessoa *tab_pessoas, int total_pessoas); 

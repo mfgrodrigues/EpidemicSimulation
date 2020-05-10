@@ -35,8 +35,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/constantes_estruturas.o \
 	${OBJECTDIR}/ficheiros.o \
+	${OBJECTDIR}/interface.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/utils.o
 
@@ -65,15 +65,15 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/epidemicsimulation: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/epidemicsimulation ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/constantes_estruturas.o: constantes_estruturas.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/constantes_estruturas.o constantes_estruturas.c
-
 ${OBJECTDIR}/ficheiros.o: ficheiros.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ficheiros.o ficheiros.c
+
+${OBJECTDIR}/interface.o: interface.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/interface.o interface.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
