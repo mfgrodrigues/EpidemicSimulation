@@ -7,17 +7,17 @@
 #ifndef FICHEIROS_H
 #define FICHEIROS_H
 
-plocal leFicheiroLocais(plocal tab_locais, int *total, char *nome_ficheiro);
+//Valida conteudo locais, devolve 1 se valido e 0 se invalido
+int validaLocais(plocal locais, int nLocais);  
 
-int validaID_Locais(plocal locais, int nLocais);
+//Le o ficheiro binario e guarda em memoria dinamica 
+plocal leFicheiroLocais(int *total, char *ficheiroLocais);
 
-int validaLigacoesLocais(plocal locais, int nLocais);
+//Valida conteudo de pessoa, devolve 1 se valido e 0 se invalido
+int validaPessoas(ppessoa nova); 
 
-//void carregaPessoas(pessoa *tab_pessoas, int *total_pessoas); 
-
-//void printPessoas(pessoa *tab_pessoas, int total_pessoas); 
-
-
+//Le o ficheiro de texto e guarda em estruturas dinamicas do tipo lista ligada
+ppessoa leFicheiroPessoas(char *ficheiroPessoas);
 
 #endif /* FICHEIROS_H */
 

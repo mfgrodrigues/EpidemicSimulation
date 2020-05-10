@@ -22,4 +22,17 @@ void printLocais(plocal locais, int nLocais) {
     }
 }
 
+void printPessoas(ppessoa pessoas){
+    
+    while(pessoas != NULL){
+        printf("%s\t%d\t%c", pessoas->identificador, pessoas->idade, pessoas->estado);
+        if(pessoas->estado == 'D'){
+            printf("\t%d",pessoas->dias_infetado);
+        }
+        printf("\n");
+        
+        pessoas = pessoas->prox;
+    }
+}
+
 

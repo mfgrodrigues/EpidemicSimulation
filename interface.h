@@ -6,8 +6,11 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
+// Imprime locais
 void printLocais(plocal locais, int nLocais); 
 
+//Imprime pessoas
+void printPessoas(ppessoa pessoas);
 
 #endif /* INTERFACE_H */
 

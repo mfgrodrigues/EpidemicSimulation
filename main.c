@@ -11,59 +11,49 @@
 #include "interface.h"
 
 int main(int argc, char** argv) {
-
+    
     // argc = 3 (nome do programa, ficheiro locais, ficheiro pessoas)
     if (argc != 3) {
         printf("Utilizacao incorreta\n");
     }
-    char *nome_ficheiro = argv[1];
-    plocal locais;
-    int nLocais, valido;
+    char *ficheiroLocais = argv[1];
+    char *ficheiroPessoas = argv[2];
+    plocal locais = NULL;
+    ppessoa pessoas = NULL;
+    int nLocais;
     char opcao;
 
-    // 1. Fase de Preparacao
+    initRandom(); 
     
+    // 1. Fase de Preparacao
+
     printf("Fase de Preparacao Iniciada\n");
     printf("A carregar locais...\n");
 
-    locais = leFicheiroLocais(locais, &nLocais, nome_ficheiro);
-    
-    valido = validaID_Locais(locais, nLocais); 
-    if(valido == 0){
-        printf("Os locais apresentam IDs negativos.\n");
-        return 0;
+    locais = leFicheiroLocais(&nLocais, ficheiroLocais);
+    if (!locais) {
+        return ERRO_FICHEIRO_LOCAIS;
     }
-    
-    valido = validaLigacoesLocais(locais, nLocais);
-    if(valido == 0){
-        printf("Os locais apresentam ligacoes invalidas.\n");
-        return 0;
-    }
-    
+
     printLocais(locais, nLocais);
 
-    
-    //printf("A carregar pessoas...\n");
+    printf("A carregar pessoas...\n");
 
-    /*carregaPessoas(tab_pessoas, argv[2]); 
-    
-    printf("Listar Pessoas?[Y\\n]\n"); 
-    scanf("%c", &opcao); 
-    
-    if(opcao == 'Y' || opcao == 'y')
-    {
-       
-            printPessoas(tab_pessoas, total_pessoas); 
-                
+    pessoas = leFicheiroPessoas(ficheiroPessoas);
+    if(!pessoas){
+        return ERRO_FICHEIRO_PESSOAS;
     }
     
-    
-    
-    
-    //2. Fase de Simulacao
-    
-     */
+    printf("Listar Pessoas?[Y\\n]\n");
+    scanf("%c", &opcao);
 
-    free(locais); 
+    if (opcao == 'Y' || opcao == 'y') {
+        printPessoas(pessoas);
+    }
+
+    //2. Fase de Simulacao
+
+    free(locais);
+    free(pessoas);
 }
 
