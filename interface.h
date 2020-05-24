@@ -7,10 +7,16 @@
 #define INTERFACE_H
 
 // Imprime locais
-void printLocais(plocal locais, int nLocais); 
+void printLocal(local local); 
 
 //Imprime pessoas
-void printPessoas(ppessoa pessoas);
+void printPessoa(pessoa pessoa);
+
+//Imprime Estado da Simulacao
+void printEstadoSimulacao(pamostra dados, int nLocais);
+
+//Menu Simulacao
+int menu(); 
 
 #endif /* INTERFACE_H */
 

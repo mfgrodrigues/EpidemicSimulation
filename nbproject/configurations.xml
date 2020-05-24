@@ -5,8 +5,9 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>constantes_estruturas.h</itemPath>
-      <itemPath>ficheiros.h</itemPath>
       <itemPath>interface.h</itemPath>
+      <itemPath>preparacao.h</itemPath>
+      <itemPath>simulacao.h</itemPath>
       <itemPath>utils.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -21,9 +22,10 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>ficheiros.c</itemPath>
       <itemPath>interface.c</itemPath>
       <itemPath>main.c</itemPath>
+      <itemPath>preparacao.c</itemPath>
+      <itemPath>simulacao.c</itemPath>
       <itemPath>utils.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -56,10 +58,6 @@
       </item>
       <item path="constantes_estruturas.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ficheiros.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="ficheiros.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="interface.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="interface.h" ex="false" tool="3" flavor2="0">
@@ -69,6 +67,14 @@
       <item path="pessoasA.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="pessoasB.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="preparacao.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="preparacao.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="simulacao.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="simulacao.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="utils.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -103,10 +109,6 @@
       </item>
       <item path="constantes_estruturas.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ficheiros.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="ficheiros.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="interface.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="interface.h" ex="false" tool="3" flavor2="0">
@@ -116,6 +118,14 @@
       <item path="pessoasA.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="pessoasB.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="preparacao.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="preparacao.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="simulacao.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="simulacao.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="utils.c" ex="false" tool="0" flavor2="0">
       </item>

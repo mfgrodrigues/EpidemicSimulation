@@ -8,10 +8,13 @@
 
 #define N_LIGA 3
 #define N_IDENTIFICADOR 20
+#define DISSEMINACAO 0.05
+#define IMUNIDADE 0.20
 
 //Definicao de erros
 #define ERRO_FICHEIRO_LOCAIS 1
 #define ERRO_FICHEIRO_PESSOAS 2 
+#define ERRO_ALOCACAO_MEMORIA 3
 
 typedef struct sala local, *plocal; 
 struct sala {
@@ -20,13 +23,20 @@ struct sala {
     int liga[N_LIGA];       // id das ligacoes
 };
 
-typedef struct amostra pessoa, *ppessoa;  
-struct amostra {
+typedef struct pessoa pessoa, *ppessoa;  
+struct pessoa {
     char identificador[N_IDENTIFICADOR];     // identificador unico alfanumerio (1 palavra)
     int  idade;                              // idade
     char estado;                             // estado: Saudavel, Doente, Imune
     int  dias_infetado;                      // caso esteja doente, há quantos dias foi infetado
     ppessoa prox;                            // ponteiro para o proximo elemento
+};
+
+typedef struct amostra amostra, *pamostra; 
+struct amostra {
+    local localidade;                         //estrutura do tipo local (localidade onde pertenece o grupo de pessoas)
+    ppessoa pessoas;                          //ponteiro para a primeira pessoa da lista
+    int conta_pessoas;                        //conta o numero de pessoas em cada lista
 };
 
 #endif /* CONSTANTES_ESTRUTURAS_H */

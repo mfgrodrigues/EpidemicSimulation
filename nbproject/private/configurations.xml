@@ -26,8 +26,9 @@
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" E1.bin pessoasA.txt</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" E2.bin pessoasA.txt</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" E1.bin pessoasA.txt</runcommand>
+        <runcommand>"${OUTPUT_PATH}" E2.bin pessoasA.txt</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

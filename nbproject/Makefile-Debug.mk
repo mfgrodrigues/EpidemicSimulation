@@ -35,9 +35,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/ficheiros.o \
 	${OBJECTDIR}/interface.o \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/preparacao.o \
+	${OBJECTDIR}/simulacao.o \
 	${OBJECTDIR}/utils.o
 
 
@@ -65,11 +66,6 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/epidemicsimulation: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/epidemicsimulation ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/ficheiros.o: ficheiros.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ficheiros.o ficheiros.c
-
 ${OBJECTDIR}/interface.o: interface.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -79,6 +75,16 @@ ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+
+${OBJECTDIR}/preparacao.o: preparacao.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/preparacao.o preparacao.c
+
+${OBJECTDIR}/simulacao.o: simulacao.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/simulacao.o simulacao.c
 
 ${OBJECTDIR}/utils.o: utils.c
 	${MKDIR} -p ${OBJECTDIR}

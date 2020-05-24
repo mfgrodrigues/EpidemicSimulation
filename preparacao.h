@@ -4,8 +4,8 @@
  */
 
 
-#ifndef FICHEIROS_H
-#define FICHEIROS_H
+#ifndef PREPARACAO_H
+#define PREPARACAO_H
 
 //Valida conteudo locais, devolve 1 se valido e 0 se invalido
 int validaLocais(plocal locais, int nLocais);  
@@ -19,5 +19,8 @@ int validaPessoas(ppessoa nova);
 //Le o ficheiro de texto e guarda em estruturas dinamicas do tipo lista ligada
 ppessoa leFicheiroPessoas(char *ficheiroPessoas);
 
-#endif /* FICHEIROS_H */
+//Organiza os dados na nova estrutura utilizada na fase de simulacao
+pamostra distibuiPessoas(plocal locais, int nLocais, ppessoa pessoas);
 
+
+#endif /* PREPARACAO_H */

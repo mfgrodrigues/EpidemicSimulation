@@ -6,11 +6,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "constantes_estruturas.h"
+#include "utils.h"
 
 int validaLocais(plocal locais, int nLocais) {
 
     int valida, i, j, k, l;
-    
+
     //valida ID (positivo e unico)
     for (i = 0; i < nLocais; i++) {
         for (j = i + 1; j < nLocais; j++) {
@@ -20,7 +21,7 @@ int validaLocais(plocal locais, int nLocais) {
             }
         }
     }
-    
+
     //valida ligacoes
     for (i = 0; i < nLocais; i++) {
         for (j = 0; j < 3; j++) {
@@ -42,7 +43,7 @@ int validaLocais(plocal locais, int nLocais) {
             }
         }
     }
-    
+
     return 1;
 }
 
@@ -73,8 +74,8 @@ plocal leFicheiroLocais(int *total, char *ficheiroLocais) {
     rewind(f);
 
     fread(locais, sizeof (local), *total, f);
-    
-    if(!validaLocais(locais, *total)){
+
+    if (!validaLocais(locais, *total)) {
         return NULL;
     }
 
@@ -142,4 +143,34 @@ ppessoa leFicheiroPessoas(char *ficheiroPessoas) {
 
     fclose(f);
     return pessoas;
+}
+
+
+pamostra distibuiPessoas(plocal locais, int nLocais, ppessoa pessoas) {
+
+    int i, posicao;
+    ppessoa aux, nova;
+
+    pamostra dados = malloc(sizeof (amostra) * nLocais);
+    if (dados == NULL) {
+        printf("Erro na alocacao de memoria\n");
+        return NULL;
+    }
+
+    for (i = 0; i < nLocais; i++) {
+        dados[i].localidade = locais[i];
+        dados[i].conta_pessoas = 0; 
+    }
+
+    aux = pessoas;
+    while (aux != NULL) {
+
+        posicao = intUniformRnd(0, nLocais - 1);
+        nova = aux;
+        aux = aux->prox;
+        dados[posicao].pessoas = insereInicio(dados[posicao].pessoas, nova);
+        dados[posicao].conta_pessoas++;
+    }
+    
+    return dados;
 }

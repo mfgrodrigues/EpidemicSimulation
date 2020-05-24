@@ -7,32 +7,62 @@
 #include <stdlib.h>
 #include "constantes_estruturas.h"
 #include "interface.h"
+#include "simulacao.h"
 
-void printLocais(plocal locais, int nLocais) {
+void printLocal(local local) {
 
-    int i, j;
-    for (i = 0; i < nLocais; i++) {
-        printf("Local: %d\tCapacidade: %d\tLigacoes:", (locais + i)->id, (locais + i)->capacidade);
-        for (j = 0; j < 3; j++) {
-            if ((locais + i)->liga[j] != -1) {
-                printf("%d ", (locais + i)->liga[j]);
-            }
+    int i;
+
+    printf("Local: %d\tCapacidade: %d\tLigacoes:", local.id, local.capacidade);
+    for (i = 0; i < N_LIGA; i++) {
+        if (local.liga[i] != -1) {
+            printf("%d ", local.liga[i]);
+        }
+    }
+    printf("\n");
+}
+
+void printPessoa(pessoa pessoa) {
+
+    printf("%-15s\t%d\t%c", pessoa.identificador, pessoa.idade, pessoa.estado);
+    if (pessoa.estado == 'D') {
+        printf("\t%d", pessoa.dias_infetado);
+    }
+    printf("\n");
+}
+
+void printEstadoSimulacao(pamostra dados, int nLocais) {
+
+    for (int i = 0; i < nLocais; i++) {
+
+        printLocal(dados[i].localidade);
+
+        ppessoa aux = dados[i].pessoas;
+        while (aux != NULL) {
+            printPessoa(*aux);
+            aux = aux->prox;
         }
         printf("\n");
     }
 }
 
-void printPessoas(ppessoa pessoas){
-    
-    while(pessoas != NULL){
-        printf("%s\t%d\t%c", pessoas->identificador, pessoas->idade, pessoas->estado);
-        if(pessoas->estado == 'D'){
-            printf("\t%d",pessoas->dias_infetado);
-        }
-        printf("\n");
-        
-        pessoas = pessoas->prox;
-    }
-}
+int menu() {
 
+    int i;
+
+    puts("1. ADICIONAR DOENTE");
+    puts("2. TRANSFERIR PESSOAS");
+    puts("3. AVANCAR 1 ITERACAO NA SIMULACAO");
+    puts("4. VOLTAR ATRAS X ITERACOES (UNDO X)");
+    puts("5. APRESENTAR ESTATISTICA");
+    puts("6. TERMINAR SIMULACAO");
+    puts("Escolha uma opcao");
+
+    do {
+        scanf("%d", &i);
+        printf("%d", i);
+    } while (i < 1 || i > 6);
+
+    return i;
+}
 
