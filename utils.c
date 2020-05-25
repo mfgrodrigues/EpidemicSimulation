@@ -28,6 +28,23 @@ ppessoa insereInicio(ppessoa lista, ppessoa nova) {
     return lista;
 }
 
+ppessoa insereFinal(ppessoa lista, ppessoa nova) {
+    
+    ppessoa aux; 
+    
+    if (lista == NULL) {
+       return nova; 
+    }
+    
+    aux = lista; 
+    while(aux->prox != NULL){
+        aux = aux->prox;
+    }
+    aux->prox = nova; 
+   
+    return lista;
+}
+
 ppessoa removeElementoLista(ppessoa lista, char ID[]){
 
     ppessoa atual, anterior = NULL; 

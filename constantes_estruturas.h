@@ -29,7 +29,7 @@ struct pessoa {
     int  idade;                              // idade
     char estado;                             // estado: Saudavel, Doente, Imune
     int  dias_infetado;                      // caso esteja doente, há quantos dias foi infetado
-    ppessoa prox;                            // ponteiro para o proximo elemento
+    ppessoa prox;                            // ponteiro para o proximo elemento (pessoa)
 };
 
 typedef struct amostra amostra, *pamostra; 
@@ -38,5 +38,11 @@ struct amostra {
     ppessoa pessoas;                          //ponteiro para a primeira pessoa da lista
     int conta_pessoas;                        //conta o numero de pessoas em cada lista
 };
+
+typedef struct iteracao iteracao, *piteracao;
+struct iteracao{
+    pamostra dados;
+    piteracao prox;
+}; 
 
 #endif /* CONSTANTES_ESTRUTURAS_H */

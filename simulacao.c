@@ -147,7 +147,7 @@ void propagacaoDoenca(pamostra dadosSim, int nLocais) {
 
 void recuperaDoente(pamostra dadosSim, int nLocais) {
 
-    int i, recuperado;
+    int i, recuperado, imune;
     float prob_recuperacao;
     ppessoa doente;
 
@@ -156,37 +156,25 @@ void recuperaDoente(pamostra dadosSim, int nLocais) {
 
         doente = dadosSim[i].pessoas;
         while (doente != NULL) {
-            if (doente->estado == 'D' && doente->dias_infetado == (doente->idade / 10) + 5) {
-                doente->estado = 'S';
-                doente->dias_infetado = 0;
-            } else if (doente->estado == 'D') {
+            if (doente->estado == 'D') {
                 prob_recuperacao = 1 / (doente->idade);
                 recuperado = probEvento(prob_recuperacao);
                 if (recuperado == 1) {
                     doente->estado = 'S';
                     doente->dias_infetado = 0;
                 }
-            }
-        }
-        doente = doente->prox;
-    }
-}
-
-void pessoaImune(pamostra dadosSim, int nLocais) {
-
-    int i, imune;
-    ppessoa psaudavel;
-
-    for (i = 0; i < nLocais; i++) {
-
-        psaudavel = dadosSim[i].pessoas;
-        while (psaudavel != NULL) {
-            if (psaudavel->estado == 'S') {
-                imune = probEvento(IMUNIDADE);
-                if (imune == 1) {
-                    psaudavel->estado = 'I';
+                if (doente->dias_infetado == (doente->idade / 10) + 5) {
+                    doente->estado = 'S';
+                    doente->dias_infetado = 0;
+                }
+                if (doente->estado == 'S') {
+                    imune = probEvento(IMUNIDADE);
+                    if (imune == 1) {
+                        doente->estado = 'I';
+                    }
                 }
             }
+            doente = doente->prox;
         }
     }
 }
@@ -195,30 +183,81 @@ pamostra avancaIteracao(pamostra dadosSim, int nLocais) {
 
     int i;
     ppessoa aux;
-    
-    printf("incremento");
-    
+
     for (i = 0; i < nLocais; i++) {
         aux = dadosSim[i].pessoas;
         while (aux != NULL) {
             if (aux->estado == 'D') {
                 aux->dias_infetado++;
-                aux = aux->prox;
             }
+            aux = aux->prox;
         }
     }
-    
-    printf("doenca"); 
-    
+
     propagacaoDoenca(dadosSim, nLocais);
 
-    printf("recuperacao");
     recuperaDoente(dadosSim, nLocais);
-    
-    printf("imunidade"); 
-    pessoaImune(dadosSim, nLocais);
 
     return dadosSim;
+}
+
+pamostra undoIteracoes(piteracao historico, int conta_iteracoes) {
+    
+    int contador = 1;
+    piteracao aux; 
+    
+    aux = historico; 
+    
+    while(aux != NULL && contador != conta_iteracoes){
+        contador++;
+        aux = aux->prox;    
+    }
+    
+    return aux->dados; 
+}
+
+piteracao duplicaAmostra(pamostra dadosSim, int nLocais) {
+
+    int i;
+    piteracao it;
+    ppessoa aux, nova;
+
+    it = malloc(sizeof (iteracao));
+    if (it == NULL) {
+        printf("Erro na alocacao de memoria\n");
+        return NULL;
+    }
+
+    it->dados = malloc(sizeof(amostra) * nLocais);
+    if (it->dados == NULL) {
+        printf("Erro na alocacao de memoria\n");
+        return NULL;
+    }
+
+    for (i = 0; i < nLocais; i++) {
+        it->dados[i].localidade = dadosSim[i].localidade;
+        it->dados[i].conta_pessoas = dadosSim[i].conta_pessoas;
+        aux = dadosSim[i].pessoas;
+        while (aux != NULL) {
+            nova = malloc(sizeof(pessoa));
+            if (nova == NULL) {
+                printf("Erro na alocacao de memoria\n");
+                return NULL;
+            }
+            *nova = *aux;
+            nova->prox = NULL;
+            it->dados[i].pessoas = insereFinal(it->dados[i].pessoas, nova);
+            aux = aux->prox;
+        }
+    }
+    return it;
+}
+
+piteracao insereHistorico(piteracao historico, piteracao it) {
+    
+    it->prox = historico;
+    historico = it;
+    return historico;
 }
 
 

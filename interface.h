@@ -10,7 +10,7 @@
 void printLocal(local local); 
 
 //Imprime pessoas
-void printPessoa(pessoa pessoa);
+void printPessoa(pessoa p);
 
 //Imprime Estado da Simulacao
 void printEstadoSimulacao(pamostra dados, int nLocais);

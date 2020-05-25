@@ -22,6 +22,7 @@ int main(int argc, char** argv) {
     plocal locais = NULL;
     ppessoa pessoas = NULL;
     pamostra dadosSim = NULL;
+    piteracao historico = NULL; 
     int i, nLocais;
     char opcao;
 
@@ -59,13 +60,12 @@ int main(int argc, char** argv) {
 
     // 2. Fase de Simulacao
     
-    int localizacao, nPessoas, origem, destino;
+    int localizacao, nPessoas, origem, destino, conta_iteracoes;
     ppessoa doente;
 
     do {
         printEstadoSimulacao(dadosSim, nLocais);
         i = menu();
-        printf("%d", i);
         
         switch (i) {
             case 1:
@@ -116,12 +116,18 @@ int main(int argc, char** argv) {
                 break;
                 
             case 3: 
-                printf("incremento");
+                historico = insereHistorico(historico, duplicaAmostra(dadosSim, nLocais));
                 dadosSim = avancaIteracao(dadosSim, nLocais);   
                 break;
-                /*case 4: break;
-                case 5: break; 
-                case 6: ; */
+            case 4: 
+                do{
+                printf("Indique o numero de iterações que pretende recuar:"); 
+                scanf("%d", &conta_iteracoes);
+                }while(conta_iteracoes < 1 || conta_iteracoes > 3); 
+                dadosSim = undoIteracoes(historico, conta_iteracoes); 
+                break;
+                /*case 5: break; 
+                case 6: break;*/
         }
     } while (i != 6);
 }

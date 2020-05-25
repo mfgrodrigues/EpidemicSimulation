@@ -22,11 +22,11 @@ void printLocal(local local) {
     printf("\n");
 }
 
-void printPessoa(pessoa pessoa) {
+void printPessoa(pessoa p) {
 
-    printf("%-15s\t%d\t%c", pessoa.identificador, pessoa.idade, pessoa.estado);
-    if (pessoa.estado == 'D') {
-        printf("\t%d", pessoa.dias_infetado);
+    printf("%-15s\t%d\t%c", p.identificador, p.idade, p.estado);
+    if (p.estado == 'D') {
+        printf("\t%d", p.dias_infetado);
     }
     printf("\n");
 }
@@ -60,7 +60,6 @@ int menu() {
 
     do {
         scanf("%d", &i);
-        printf("%d", i);
     } while (i < 1 || i > 6);
 
     return i;

@@ -17,6 +17,9 @@ int probEvento(float prob);
 //Insere uma nova pessoa numa lista de pessoas
 ppessoa insereInicio(ppessoa lista, ppessoa nova);
 
+//Insere uma nova pessoa no final da lista
+ppessoa insereFinal(ppessoa lista, ppessoa nova); 
+
 //Elimina elemento da lista de pessoas da amostra
 ppessoa removeElementoLista(ppessoa lista, char ID[]); 
 
