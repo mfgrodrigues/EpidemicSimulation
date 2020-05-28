@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     plocal locais = NULL;
     ppessoa pessoas = NULL;
     pamostra dadosSim = NULL;
-    piteracao historico = NULL; 
+    piteracao historico = NULL;
     int i, nLocais;
     char opcao;
 
@@ -59,35 +59,37 @@ int main(int argc, char** argv) {
     }
 
     // 2. Fase de Simulacao
-    
+
+    char op;
     int localizacao, nPessoas, origem, destino, conta_iteracoes;
     ppessoa doente;
+    char ficheiro[FICHEIRO];
 
     do {
         printEstadoSimulacao(dadosSim, nLocais);
         i = menu();
-        
+
         switch (i) {
             case 1:
-                doente = malloc(sizeof(pessoa));
+                doente = malloc(sizeof (pessoa));
                 if (doente == NULL) {
                     printf("Erro na alocacao de memoria\n");
                     return ERRO_ALOCACAO_MEMORIA;
                 }
                 doente->estado = 'D';
-                
+
                 printf("Indique o id do local a adicionar: ");
                 scanf("%d", &localizacao);
-                if(excedeCapacidade(dadosSim, nLocais, localizacao, 1) == 1){
-                    printf("Local ja se encontra na capacidade maxima\n"); 
+                if (excedeCapacidade(dadosSim, nLocais, localizacao, 1) == 1) {
+                    printf("Local ja se encontra na capacidade maxima\n");
                     break;
                 }
-                
+
                 printf("Indique o identificador do doente:");
                 scanf("%s", doente->identificador);
-                if(verificaExisteNome(dadosSim, nLocais, doente) == 1) {
-                    printf("O identificador inserido ja existe\n"); 
-                    break; 
+                if (verificaExisteNome(dadosSim, nLocais, doente) == 1) {
+                    printf("O identificador inserido ja existe\n");
+                    break;
                 }
                 fflush(stdin);
                 printf("Idade: ");
@@ -96,7 +98,7 @@ int main(int argc, char** argv) {
                 scanf("%d", &doente->dias_infetado);
                 dadosSim = adicionaPessoaLocalidade(dadosSim, nLocais, localizacao, doente);
                 break;
-                
+
             case 2:
                 printf("Indique o numero de pessoas que pretende mover:");
                 scanf("%d", &nPessoas);
@@ -104,30 +106,42 @@ int main(int argc, char** argv) {
                 scanf("%d", &origem);
                 printf("Local de destino: ");
                 scanf("%d", &destino);
-                if(excedeCapacidade(dadosSim, nLocais, destino, nPessoas) == 1){
-                    printf("Local ja se encontra na capacidade maxima\n"); 
+                if (excedeCapacidade(dadosSim, nLocais, destino, nPessoas) == 1) {
+                    printf("Local ja se encontra na capacidade maxima\n");
+                    break;
+                } else if (validaOrigemDestino(dadosSim, nLocais, origem, destino) == 1) {
                     break;
                 }
-                else if(validaOrigemDestino(dadosSim,nLocais, origem, destino) == 1){
-                    break;
-                }
-                
+
                 dadosSim = transferePessoas(dadosSim, nLocais, origem, destino, nPessoas);
                 break;
-                
-            case 3: 
+
+            case 3:
                 historico = insereHistorico(historico, duplicaAmostra(dadosSim, nLocais));
-                dadosSim = avancaIteracao(dadosSim, nLocais);   
+                dadosSim = avancaIteracao(dadosSim, nLocais);
                 break;
-            case 4: 
-                do{
-                printf("Indique o numero de iterações que pretende recuar:"); 
-                scanf("%d", &conta_iteracoes);
-                }while(conta_iteracoes < 1 || conta_iteracoes > 3); 
-                dadosSim = undoIteracoes(historico, conta_iteracoes); 
+            case 4:
+                do {
+                    printf("Indique o numero de iterações que pretende recuar:");
+                    scanf("%d", &conta_iteracoes);
+                } while (conta_iteracoes < 1 || conta_iteracoes > 3);
+                dadosSim = undoIteracoes(historico, conta_iteracoes);
                 break;
-                /*case 5: break; 
-                case 6: break;*/
+                /* case 5: break; */
+            case 6:
+                printf("A gerar relatório da simulacao...\n");
+                gravaDadosSimulacao(dadosSim, nLocais);
+                printf("Pretende guardar a amostra da ultima iteracao da simulacao?[Y\\n]\n");
+                fflush(stdin);
+                scanf("%c", &op);
+                if (op != 'Y' && op != 'y') {
+                    libertaLista(dadosSim->pessoas);
+                    return EXIT_SUCCESS;
+                }
+                printf("Indique o nome do ficheiro de texto (nome.txt): ");
+                scanf("%s", ficheiro);
+                gravaIteracao(ficheiro, dadosSim, nLocais);
+                libertaLista(dadosSim->pessoas);
         }
     } while (i != 6);
 }

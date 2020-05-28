@@ -202,18 +202,18 @@ pamostra avancaIteracao(pamostra dadosSim, int nLocais) {
 }
 
 pamostra undoIteracoes(piteracao historico, int conta_iteracoes) {
-    
+
     int contador = 1;
-    piteracao aux; 
-    
-    aux = historico; 
-    
-    while(aux != NULL && contador != conta_iteracoes){
+    piteracao aux;
+
+    aux = historico;
+
+    while (aux != NULL && contador != conta_iteracoes) {
         contador++;
-        aux = aux->prox;    
+        aux = aux->prox;
     }
-    
-    return aux->dados; 
+
+    return aux->dados;
 }
 
 piteracao duplicaAmostra(pamostra dadosSim, int nLocais) {
@@ -228,7 +228,7 @@ piteracao duplicaAmostra(pamostra dadosSim, int nLocais) {
         return NULL;
     }
 
-    it->dados = malloc(sizeof(amostra) * nLocais);
+    it->dados = malloc(sizeof (amostra) * nLocais);
     if (it->dados == NULL) {
         printf("Erro na alocacao de memoria\n");
         return NULL;
@@ -239,7 +239,7 @@ piteracao duplicaAmostra(pamostra dadosSim, int nLocais) {
         it->dados[i].conta_pessoas = dadosSim[i].conta_pessoas;
         aux = dadosSim[i].pessoas;
         while (aux != NULL) {
-            nova = malloc(sizeof(pessoa));
+            nova = malloc(sizeof (pessoa));
             if (nova == NULL) {
                 printf("Erro na alocacao de memoria\n");
                 return NULL;
@@ -254,12 +254,34 @@ piteracao duplicaAmostra(pamostra dadosSim, int nLocais) {
 }
 
 piteracao insereHistorico(piteracao historico, piteracao it) {
-    
+
     it->prox = historico;
     historico = it;
     return historico;
 }
 
+void contaISD(ppessoa dadosSim, int *imunes, int *saudaveis, int *doentes) {
+
+    int i;
+    ppessoa aux;
+    *imunes = 0;
+    *saudaveis = 0;
+    *doentes = 0;
+
+    aux = dadosSim;
+    while (aux != NULL) {
+        if (aux->estado == 'I') {
+            (*imunes)++;
+        }
+        if (aux->estado == 'S') {
+            (*saudaveis)++;
+        }
+        if (aux->estado == 'D') {
+            (*doentes)++;
+        }
+        aux = aux->prox; 
+    }
+}
 
 /*void apresentaEstatistica(pamostra dadosSim, int nlocais){
 
@@ -267,6 +289,52 @@ piteracao insereHistorico(piteracao historico, piteracao it) {
 }*/
 
 
+void gravaDadosSimulacao(pamostra dadosSim, int nLocais) {
 
+    FILE *f;
+    int i, imunes, saudaveis, doentes;
 
+    f = fopen("report.txt", "wt");
+    if (f == NULL) {
+        printf("Erro no acesso ao ficheiro\n");
+        return;
+    }
 
+    for (i = 0; i < nLocais; i++) {
+        fprintf(f, "Local:%d\tTotal de pessoas:%d\n", dadosSim[i].localidade.id, dadosSim[i].conta_pessoas);
+        contaISD(dadosSim[i].pessoas, &imunes, &saudaveis, &doentes);
+        fprintf(f, "Imunes:%d \tSaudaveis:%d \tDoentes: %d\n\n", imunes, saudaveis, doentes);
+    }
+
+    fclose(f);
+
+}
+
+void gravaIteracao(char *ficheiro, pamostra dadosSim, int nLocais) {
+
+    FILE *f;
+    int i;
+    ppessoa aux;
+
+    f = fopen(ficheiro, "wt");
+
+    if (f == NULL) {
+        printf("Erro no acesso ao ficheiro\n");
+        return;
+    }
+
+    for (i = 0; i < nLocais; i++) {
+        fprintf(f, "\nLocal:%d\tTotal de pessoas:%d\n", dadosSim[i].localidade.id, dadosSim[i].conta_pessoas);
+        aux = dadosSim[i].pessoas;
+        while (aux != NULL) {
+            fprintf(f, "%s\t%d\t%c\t", aux->identificador, aux->idade, aux->estado);
+            if (aux->estado == 'D') {
+                fprintf(f, "%d", aux->dias_infetado);
+            }
+            fprintf(f, "\n");
+            aux = aux->prox;
+        }
+    }
+
+    fclose(f);
+}

@@ -23,4 +23,7 @@ ppessoa insereFinal(ppessoa lista, ppessoa nova);
 //Elimina elemento da lista de pessoas da amostra
 ppessoa removeElementoLista(ppessoa lista, char ID[]); 
 
+//Elimina a lista completa
+void libertaLista(ppessoa lista);
+
 #endif /* UTILS_H */

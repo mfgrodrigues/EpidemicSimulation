@@ -22,58 +22,58 @@ int probEvento(float prob) {
 }
 
 ppessoa insereInicio(ppessoa lista, ppessoa nova) {
-    
+
     nova->prox = lista;
     lista = nova;
     return lista;
 }
 
 ppessoa insereFinal(ppessoa lista, ppessoa nova) {
-    
-    ppessoa aux; 
-    
+
+    ppessoa aux;
+
     if (lista == NULL) {
-       return nova; 
+        return nova;
     }
-    
-    aux = lista; 
-    while(aux->prox != NULL){
+
+    aux = lista;
+    while (aux->prox != NULL) {
         aux = aux->prox;
     }
-    aux->prox = nova; 
-   
+    aux->prox = nova;
+
     return lista;
 }
 
-ppessoa removeElementoLista(ppessoa lista, char ID[]){
+ppessoa removeElementoLista(ppessoa lista, char ID[]) {
 
-    ppessoa atual, anterior = NULL; 
-    
-    atual = lista; 
-    while(atual != NULL && strcmp(atual->identificador, ID) != 0){
+    ppessoa atual, anterior = NULL;
+
+    atual = lista;
+    while (atual != NULL && strcmp(atual->identificador, ID) != 0) {
         anterior = atual;
-        atual = atual->prox; 
+        atual = atual->prox;
     }
-    
-    if(atual == NULL){
+
+    if (atual == NULL) {
         return lista;
     }
-    
-    if(anterior == NULL){
-        lista = atual->prox; 
+
+    if (anterior == NULL) {
+        lista = atual->prox;
+    } else {
+        anterior->prox = atual->prox;
     }
-    else{ 
-        anterior->prox = atual->prox; 
-    }
-    
+
     return lista;
 }
 
-/*void liberta_lista(ppessoa p) {
+void libertaLista(ppessoa lista){
     ppessoa aux;
-    while (p != NULL) {
-        aux = p;
-        p = p->prox;
+    
+    while (lista != NULL) {
+        aux = lista;
+        lista = lista->prox;
         free(aux);
     }
-}*/
+}

@@ -40,5 +40,14 @@ piteracao insereHistorico(piteracao historico, piteracao it);
 //Volta atras ate 3 iteracoes
 pamostra undoIteracoes(piteracao historico, int conta_iteracoes);
 
+//Conta numero de pessoas imunes, saudaveis e doentes em cada local
+void contaISD(ppessoa dadosSim ,int *imunes, int *saudaveis, int *doentes);
+
+//Grava erlatorio final da simulacao num ficheiro de texto
+void gravaDadosSimulacao(pamostra dadosSim, int nLocais);
+
+//Grava a amostra da ultima iteracao
+void gravaIteracao(char *ficheiro, pamostra dadosSim, int nLocais);  
+
 #endif /* SIMULACAO_H */
 

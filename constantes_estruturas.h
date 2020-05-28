@@ -10,6 +10,7 @@
 #define N_IDENTIFICADOR 20
 #define DISSEMINACAO 0.05
 #define IMUNIDADE 0.20
+#define FICHEIRO 50
 
 //Definicao de erros
 #define ERRO_FICHEIRO_LOCAIS 1
