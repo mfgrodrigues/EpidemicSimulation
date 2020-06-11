@@ -1,6 +1,5 @@
 /* 
  * Author: Maria de Fatima Gomes Rodrigues (2019112924)
- * Created on April 7, 2020, 10:40 PM
  */
 
 #include <stdio.h>
@@ -23,6 +22,7 @@ int main(int argc, char** argv) {
     ppessoa pessoas = NULL;
     pamostra dadosSim = NULL;
     piteracao historico = NULL;
+    piteracao it = NULL;
     int i, nLocais;
     char opcao;
 
@@ -49,8 +49,6 @@ int main(int argc, char** argv) {
 
     free(locais);
 
-    printEstadoSimulacao(dadosSim, nLocais);
-
     printf("Pretende iniciar simulação?[Y\\n]\n");
     scanf("%c", &opcao);
 
@@ -63,11 +61,16 @@ int main(int argc, char** argv) {
     char op;
     int localizacao, nPessoas, origem, destino, conta_iteracoes;
     ppessoa doente;
+    pamostra dadosAux;
     char ficheiro[FICHEIRO];
 
     do {
+        printf("......................................................................................................\n");
+        printf("\nAMOSTRA:\n");
         printEstadoSimulacao(dadosSim, nLocais);
+        printf("......................................................................................................\n");
         i = menu();
+
 
         switch (i) {
             case 1:
@@ -77,11 +80,14 @@ int main(int argc, char** argv) {
                     return ERRO_ALOCACAO_MEMORIA;
                 }
                 doente->estado = 'D';
-
                 printf("Indique o id do local a adicionar: ");
                 scanf("%d", &localizacao);
+                if(existeLocal(dadosSim, nLocais,localizacao) == -1){
+                    printf("O local indicado nao pertence a amostra.\n");
+                    break;
+                }
                 if (excedeCapacidade(dadosSim, nLocais, localizacao, 1) == 1) {
-                    printf("Local ja se encontra na capacidade maxima\n");
+                    printf("O local %d ja se encontra na capacidade maxima\n", localizacao);
                     break;
                 }
 
@@ -120,14 +126,31 @@ int main(int argc, char** argv) {
                 historico = insereHistorico(historico, duplicaAmostra(dadosSim, nLocais));
                 dadosSim = avancaIteracao(dadosSim, nLocais);
                 break;
+                
             case 4:
                 do {
                     printf("Indique o numero de iterações que pretende recuar:");
                     scanf("%d", &conta_iteracoes);
                 } while (conta_iteracoes < 1 || conta_iteracoes > 3);
-                dadosSim = undoIteracoes(historico, conta_iteracoes);
+                dadosAux = undoIteracoes(&historico, conta_iteracoes, nLocais);
+                if(dadosAux == NULL){
+                    printf("Nao foi possivel recuar %d iteracoes\n", conta_iteracoes);
+                }
+                else{
+                    libertaLista(dadosSim->pessoas);
+                    free(dadosSim);
+                    dadosSim = dadosAux;
+                }
                 break;
-                /* case 5: break; */
+                
+            case 5: 
+                printf("......................................................................................................\n");
+                printf("DADOS ESTATISTICOS DA SIMULACAO:\n");
+                calculaEstatistica(dadosSim, nLocais,1);
+                printf("......................................................................................................\n");
+                EstatisticaIteracaoAnt(historico, nLocais); 
+                break;
+                
             case 6:
                 printf("A gerar relatório da simulacao...\n");
                 gravaDadosSimulacao(dadosSim, nLocais);

@@ -45,6 +45,31 @@ ppessoa insereFinal(ppessoa lista, ppessoa nova) {
     return lista;
 }
 
+piteracao insereAmostraInicio(piteracao historico, piteracao it){
+    
+    it->prox = historico;
+    historico = it; 
+    return historico;
+}
+
+piteracao removeUltimaAmostra(piteracao historico){
+    
+    piteracao atual, anterior = NULL; 
+    
+    if (historico == NULL || historico->prox == NULL){
+        return NULL;
+    } 
+    
+    atual = historico; 
+    while(atual->prox != NULL){
+        anterior = atual;
+        atual = atual->prox;
+    }
+     
+    anterior->prox = NULL;
+    return historico;
+}
+
 ppessoa removeElementoLista(ppessoa lista, char ID[]) {
 
     ppessoa atual, anterior = NULL;
@@ -76,4 +101,11 @@ void libertaLista(ppessoa lista){
         lista = lista->prox;
         free(aux);
     }
+}
+
+void libertaIteracao(piteracao iteracao){
+    
+   libertaLista(iteracao->dados->pessoas); 
+   free(iteracao->dados);
+   free(iteracao);
 }

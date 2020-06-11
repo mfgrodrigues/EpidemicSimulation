@@ -1,0 +1,17 @@
+
+Local:10	Total de pessoas:0
+
+Local:20	Total de pessoas:2
+Zulmira2A	17	S	
+PauloPires1	23	S	
+
+Local:30	Total de pessoas:4
+LuisaSantos	40	D	4
+PauloPires2	67	S	
+Tomas111	12	S	
+AnaLebre34A	55	I	
+
+Local:31	Total de pessoas:0
+
+Local:32	Total de pessoas:1
+Fatima	23	D	8

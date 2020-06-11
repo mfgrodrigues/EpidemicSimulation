@@ -15,6 +15,9 @@ void printPessoa(pessoa p);
 //Imprime Estado da Simulacao
 void printEstadoSimulacao(pamostra dados, int nLocais);
 
+//Imprime historico 
+void printHistorico(piteracao historico, int nLocais);
+
 //Menu Simulacao
 int menu(); 
 

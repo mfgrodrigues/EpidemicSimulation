@@ -1,0 +1,15 @@
+Local:10	Total de pessoas:1
+Imunes:0 	Saudaveis:1 	Doentes: 0
+
+Local:20	Total de pessoas:0
+Imunes:0 	Saudaveis:0 	Doentes: 0
+
+Local:30	Total de pessoas:2
+Imunes:0 	Saudaveis:2 	Doentes: 0
+
+Local:31	Total de pessoas:1
+Imunes:0 	Saudaveis:0 	Doentes: 1
+
+Local:32	Total de pessoas:2
+Imunes:1 	Saudaveis:1 	Doentes: 0
+

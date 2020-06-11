@@ -35,15 +35,14 @@ struct pessoa {
 
 typedef struct amostra amostra, *pamostra; 
 struct amostra {
-    local localidade;                         //estrutura do tipo local (localidade onde pertenece o grupo de pessoas)
+    local localidade;                         //estrutura do tipo local (localidade onde pertence o grupo de pessoas)
     ppessoa pessoas;                          //ponteiro para a primeira pessoa da lista
     int conta_pessoas;                        //conta o numero de pessoas em cada lista
 };
 
 typedef struct iteracao iteracao, *piteracao;
-struct iteracao{
+struct iteracao {
     pamostra dados;
     piteracao prox;
 }; 
-
 #endif /* CONSTANTES_ESTRUTURAS_H */

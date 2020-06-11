@@ -20,10 +20,19 @@ ppessoa insereInicio(ppessoa lista, ppessoa nova);
 //Insere uma nova pessoa no final da lista
 ppessoa insereFinal(ppessoa lista, ppessoa nova); 
 
+//Insere copia da amostra no inicio da lista de iteracoes (it)
+piteracao insereAmostraInicio(piteracao historico, piteracao it);
+
+//Remove ultima amostra da lista de iteracoes (it)
+piteracao removeUltimaAmostra(piteracao historico);
+
 //Elimina elemento da lista de pessoas da amostra
 ppessoa removeElementoLista(ppessoa lista, char ID[]); 
 
 //Elimina a lista completa
 void libertaLista(ppessoa lista);
+
+//Liberta 
+void libertaIteracao(piteracao iteracao);
 
 #endif /* UTILS_H */

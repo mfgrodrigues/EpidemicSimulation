@@ -25,6 +25,18 @@ pamostra adicionaPessoaLocalidade(pamostra dadosSim, int nLocais, int localizaca
     return dadosSim;
 }
 
+int existeLocal(pamostra dadosSim, int nLocais, int localizacao) {
+
+    int i;
+
+    for (i = 0; i < nLocais; i++) {
+        if (localizacao == dadosSim[i].localidade.id) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 int excedeCapacidade(pamostra dadosSim, int nLocais, int localizacao, int nPessoas) {
 
     int i;
@@ -66,7 +78,8 @@ int validaOrigemDestino(pamostra dadosSim, int nLocais, int origem, int destino)
             break;
         }
     }
-    for (j = 0; i < nLocais; i++) {
+
+    for (j = 0; j < nLocais; j++) {
         if (destino == dadosSim[j].localidade.id) {
             check_locais++;
             break;
@@ -201,21 +214,6 @@ pamostra avancaIteracao(pamostra dadosSim, int nLocais) {
     return dadosSim;
 }
 
-pamostra undoIteracoes(piteracao historico, int conta_iteracoes) {
-
-    int contador = 1;
-    piteracao aux;
-
-    aux = historico;
-
-    while (aux != NULL && contador != conta_iteracoes) {
-        contador++;
-        aux = aux->prox;
-    }
-
-    return aux->dados;
-}
-
 piteracao duplicaAmostra(pamostra dadosSim, int nLocais) {
 
     int i;
@@ -255,9 +253,56 @@ piteracao duplicaAmostra(pamostra dadosSim, int nLocais) {
 
 piteracao insereHistorico(piteracao historico, piteracao it) {
 
-    it->prox = historico;
-    historico = it;
+    int amostras = 0;
+    piteracao aux;
+
+    historico = insereAmostraInicio(historico, it);
+
+    aux = historico;
+    while (aux != NULL) {
+        amostras++;
+        aux = aux->prox;
+    }
+
+    if (amostras > 3) {
+        historico = removeUltimaAmostra(historico);
+    }
+
     return historico;
+}
+
+pamostra undoIteracoes(piteracao *historico, int conta_iteracoes, int nLocais) {
+
+    int contador = 0;
+    piteracao aux, anterior;
+    pamostra atual;
+
+    aux = *historico;
+    
+    //verifica se existe a possibilidade de recuar o numero de iteracoes introduzido pelo utilizador
+    while (aux != NULL) {
+        contador++;
+        aux = aux->prox; 
+    }
+    
+    if(contador != conta_iteracoes){
+        return NULL;
+    }
+    
+    //recua as iteracoes pretendidas e liberta as iteracoes nao necessarias
+    contador = 1;
+   
+    while (aux != NULL && contador != conta_iteracoes) {
+        contador++;
+        anterior = aux;
+        aux = aux->prox;
+        libertaIteracao(anterior);
+    }
+    
+    *historico = aux->prox; 
+    atual = duplicaAmostra(aux->dados, nLocais)->dados;
+    libertaIteracao(aux);
+    return atual;
 }
 
 void contaISD(ppessoa dadosSim, int *imunes, int *saudaveis, int *doentes) {
@@ -279,15 +324,82 @@ void contaISD(ppessoa dadosSim, int *imunes, int *saudaveis, int *doentes) {
         if (aux->estado == 'D') {
             (*doentes)++;
         }
-        aux = aux->prox; 
+        aux = aux->prox;
     }
 }
 
-/*void apresentaEstatistica(pamostra dadosSim, int nlocais){
+void printEstatistica(amostra dadosSim, int imunes, float tImunes, int saudaveis, float tSaudaveis, int doentes, float tDoentes) {
+
+    int i;
+    printf("LOCAL:%d\tTOTAL DE PESSOAS:%d\n", dadosSim.localidade.id, dadosSim.conta_pessoas);
+
+    if (dadosSim.conta_pessoas) {
+        printf("Imunes:%d \tSaudaveis:%d \tDoentes: %d\n", imunes, saudaveis, doentes);
+        if (imunes > 0) {
+            printf("Taxa de Imunes:%.1f%%\n", tImunes);
+        }
+        if (saudaveis > 0) {
+            printf("Taxa de Saudaveis:%.1f%%\n", tSaudaveis);
+        }
+        if (doentes > 0) {
+            printf("Taxa de Infetados:%.1f%%\n", tDoentes);
+        }
+    }
+    printf("\n");
+}
+
+void calculaEstatistica(pamostra dadosSim, int nLocais, int print) {
+
+    int i, imunes, saudaveis, doentes, nPessoas = 0, contaI = 0, contaS = 0, contaD = 0, j = 0;
+    float tImunes, tSaudaveis, tDoentes;
+    float totalI, totalS, totalD;
+
+    for (i = 0; i < nLocais; i++) {
+        if (dadosSim[i].conta_pessoas) {
+            contaISD(dadosSim[i].pessoas, &imunes, &saudaveis, &doentes);
+            if (imunes > 0) {
+                tImunes = ((float) imunes / dadosSim[i].conta_pessoas)*100;
+                contaI += imunes;
+            }
+            if (saudaveis > 0) {
+                tSaudaveis = ((float) saudaveis / dadosSim[i].conta_pessoas)*100;
+                contaS += saudaveis;
+            }
+            if (doentes > 0) {
+                tDoentes = ((float) doentes / dadosSim[i].conta_pessoas)*100;
+                contaD += doentes;
+            }
+            nPessoas += dadosSim[i].conta_pessoas;
+        }
+        if (print == 1) {
+            printEstatistica(dadosSim[i], imunes, tImunes, saudaveis, tSaudaveis, doentes, tDoentes);
+        }
+    }
+
+    totalI = ((float) contaI / nPessoas)*100;
+    totalS = ((float) contaS / nPessoas)*100;
+    totalD = ((float) contaD / nPessoas)*100;
 
 
-}*/
+    printf("\nTaxa Total de Imunes: %.1f%%\tTaxa Total de Saudaveis: %.1f%%\tTaxa Total de Infetados: %.1f%%\n", totalI, totalS, totalD);
+}
 
+void EstatisticaIteracaoAnt(piteracao historico, int nLocais) {
+
+    piteracao aux = historico;
+    int it = 0;
+    float i, s, d;
+
+    if (aux == NULL) {
+        return;
+    } else {
+        while (aux != NULL) {
+            printf("\nITERACAO -%d:\n", ++it);
+            calculaEstatistica(aux->dados, nLocais, 0);
+            aux = aux->prox;
+        }
+    }
+}
 
 void gravaDadosSimulacao(pamostra dadosSim, int nLocais) {
 
@@ -307,7 +419,6 @@ void gravaDadosSimulacao(pamostra dadosSim, int nLocais) {
     }
 
     fclose(f);
-
 }
 
 void gravaIteracao(char *ficheiro, pamostra dadosSim, int nLocais) {

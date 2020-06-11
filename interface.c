@@ -56,7 +56,7 @@ int menu() {
     puts("4. VOLTAR ATRAS X ITERACOES (UNDO X)");
     puts("5. APRESENTAR ESTATISTICA");
     puts("6. TERMINAR SIMULACAO");
-    puts("Escolha uma opcao");
+    puts("Escolha uma opcao:");
 
     do {
         scanf("%d", &i);
